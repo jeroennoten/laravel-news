@@ -9,6 +9,9 @@ use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 use JeroenNoten\LaravelFormat\ServiceProvider as FormatServiceProvider;
+use JeroenNoten\LaravelMenu\Pages\Page;
+use JeroenNoten\LaravelMenu\Pages\Provider;
+use JeroenNoten\LaravelMenu\Pages\Registrar;
 use JeroenNoten\LaravelNews\Http\ViewComposers\Latest;
 use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits\BladeDirective;
 use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits\Migrations;
@@ -33,6 +36,8 @@ class ServiceProvider extends BaseServiceProvider
         });
 
         $view->composer('news::partials.preview_latest', Latest::class);
+
+        $this->provideMenuPage();
     }
 
     public function register()
@@ -48,5 +53,19 @@ class ServiceProvider extends BaseServiceProvider
     protected function name(): string
     {
         return 'news';
+    }
+
+    private function provideMenuPage()
+    {
+        if (class_exists('JeroenNoten\\LaravelMenu\\Pages\\Registrar')) {
+            Registrar::register(new class implements Provider {
+
+                public function getPages()
+                {
+                    return [new Page('Nieuws', 'nieuws')];
+                }
+
+            });
+        }
     }
 }
