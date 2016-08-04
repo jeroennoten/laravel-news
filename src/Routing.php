@@ -42,8 +42,8 @@ class Routing
 
     private function userRoutes()
     {
-        $this->router->get('nieuws', 'NewsController@index')->name('index');
-        $this->router->get('nieuws/{article}', 'NewsController@show')->name('show');
+        $this->router->get('/', 'NewsController@index')->name('index');
+        $this->router->get('/{article}', 'NewsController@show')->name('show');
     }
 
     private function adminRoutes()
