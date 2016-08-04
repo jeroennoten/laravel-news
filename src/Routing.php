@@ -31,7 +31,8 @@ class Routing
 
             $this->router->group([
                 'as' => 'admin.news.',
-                'prefix' => 'admin/news'
+                'prefix' => 'admin/news',
+                'middleware' => 'auth'
             ], function () {
                 $this->adminRoutes();
             });
