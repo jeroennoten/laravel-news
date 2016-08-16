@@ -4,6 +4,7 @@
 namespace JeroenNoten\LaravelNews;
 
 
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -13,13 +14,11 @@ use JeroenNoten\LaravelMenu\Pages\Page;
 use JeroenNoten\LaravelMenu\Pages\Provider;
 use JeroenNoten\LaravelMenu\Pages\Registrar;
 use JeroenNoten\LaravelNews\Http\ViewComposers\Latest;
-use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits\BladeDirective;
-use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits\Migrations;
-use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits\Views;
+use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits;
 
 class ServiceProvider extends BaseServiceProvider
 {
-    use Views, Migrations, BladeDirective;
+    use ServiceProviderTraits;
 
     public function boot(Routing $routing, Dispatcher $events, Factory $view)
     {
@@ -67,5 +66,15 @@ class ServiceProvider extends BaseServiceProvider
 
             });
         }
+    }
+
+    /**
+     * Return the container instance
+     *
+     * @return Container
+     */
+    protected function getContainer()
+    {
+        return $this->app;
     }
 }
