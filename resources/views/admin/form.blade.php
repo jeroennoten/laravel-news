@@ -24,6 +24,14 @@
         <span class="help-block">{{ $errors->first('body') }}</span>
     @endif
 </div>
+<div class="checkbox">
+    <label>
+        <input type="hidden" name="published" value="0">
+        <input type="checkbox" name="published" value="1" @if(old('published', $article->published)) checked @endif>
+        Publiceren
+    </label>
+</div>
+
 
 @section('js')
     @ckeditor('summaryField', [

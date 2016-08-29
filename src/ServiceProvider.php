@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
+use JeroenNoten\LaravelAdminLte\ServiceProvider as AdminLteServiceProvider;
 use JeroenNoten\LaravelFormat\ServiceProvider as FormatServiceProvider;
 use JeroenNoten\LaravelMenu\Pages\Page;
 use JeroenNoten\LaravelMenu\Pages\Provider;
@@ -42,6 +43,7 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->register(FormatServiceProvider::class);
+        $this->app->register(AdminLteServiceProvider::class);
     }
 
     protected function path(): string

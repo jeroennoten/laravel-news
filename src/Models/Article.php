@@ -12,10 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static Collection paginate($perPage)
  * @method static QueryBuilder latest()
+ * @property mixed published
  */
 class Article extends Model
 {
-    protected $fillable = ['title', 'summary', 'body'];
+    protected $fillable = ['title', 'summary', 'body', 'published'];
 
     protected static function boot()
     {
@@ -29,5 +30,10 @@ class Article extends Model
     public function getDateAttribute()
     {
         return $this->getAttribute('created_at');
+    }
+
+    public function notPublished()
+    {
+        return !$this->published;
     }
 }
