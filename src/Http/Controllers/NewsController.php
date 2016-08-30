@@ -10,7 +10,7 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $articles = Article::paginate(5);
+        $articles = Article::where('published', true)->paginate(5);
 
         return view('news::index', compact('articles'));
     }

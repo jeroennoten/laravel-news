@@ -1,0 +1,3 @@
+<div>
+    @yield('news')
+</div>

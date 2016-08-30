@@ -20,39 +20,39 @@ class Routing
         $this->router->group([
             'namespace' => __NAMESPACE__ . '\\Http\\Controllers',
             'middleware' => 'web',
-        ], function () {
+        ], function (Router $router) {
 
-            $this->router->group([
+            $router->group([
                 'as' => 'news.',
                 'prefix' => 'nieuws'
-            ], function () {
-                $this->userRoutes();
+            ], function (Router $router) {
+                $this->userRoutes($router);
             });
 
-            $this->router->group([
+            $router->group([
                 'as' => 'admin.news.',
                 'prefix' => 'admin/news',
                 'middleware' => 'auth'
-            ], function () {
-                $this->adminRoutes();
+            ], function (Router $router) {
+                $this->adminRoutes($router);
             });
 
         });
     }
 
-    private function userRoutes()
+    private function userRoutes(Router $router)
     {
-        $this->router->get('/', 'NewsController@index')->name('index');
-        $this->router->get('/{article}', 'NewsController@show')->name('show');
+        $router->get('/', 'NewsController@index')->name('index');
+        $router->get('/{article}', 'NewsController@show')->name('show');
     }
 
-    private function adminRoutes()
+    private function adminRoutes(Router $router)
     {
-        $this->router->get('/', 'NewsAdminController@index')->name('index');
-        $this->router->get('/create', 'NewsAdminController@create')->name('create');
-        $this->router->post('/', 'NewsAdminController@store')->name('store');
-        $this->router->get('/{article}', 'NewsAdminController@edit')->name('edit');
-        $this->router->put('/{article}', 'NewsAdminController@update')->name('update');
-        $this->router->delete('/{article}', 'NewsAdminController@destroy')->name('destroy');
+        $router->get('/', 'NewsAdminController@index')->name('index');
+        $router->get('/create', 'NewsAdminController@create')->name('create');
+        $router->post('/', 'NewsAdminController@store')->name('store');
+        $router->get('/{article}', 'NewsAdminController@edit')->name('edit');
+        $router->put('/{article}', 'NewsAdminController@update')->name('update');
+        $router->delete('/{article}', 'NewsAdminController@destroy')->name('destroy');
     }
 }

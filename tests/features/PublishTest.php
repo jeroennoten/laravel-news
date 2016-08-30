@@ -2,6 +2,7 @@
 
 use Illuminate\Auth\GenericUser;
 use JeroenNoten\LaravelNews\Models\Article;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PublishTest extends TestCase
 {
@@ -18,13 +19,28 @@ class PublishTest extends TestCase
         $this->seeInDatabase('articles', ['id' => $article->id, 'published' => true]);
     }
 
-    /**
-     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
     public function testCannotViewUnpublishedArticles()
     {
         $article = factory(Article::class)->create(['published' => false]);
 
-        $this->visit("nieuws/$article->id");
+        $passed = false;
+        try {
+            $this->call('get', "nieuws/$article->id");
+            $this->assertResponseStatus(404);
+            $passed = true;
+        } catch (NotFoundHttpException $e) {
+            $passed = true;
+        }
+
+        $this->assertTrue($passed);
+    }
+
+    public function testIndexDoesNotShowUnpublishedArticles()
+    {
+        $article = factory(Article::class)->create(['published' => false, 'title' => 'Unpublished']);
+
+        $this->visit('nieuws');
+
+        $this->dontSee('Unpublished');
     }
 }

@@ -42,7 +42,7 @@ class ServiceProvider extends BaseServiceProvider
 
     public function register()
     {
-        $this->app->register(FormatServiceProvider::class);
+        //$this->app->register(FormatServiceProvider::class);
         $this->app->register(AdminLteServiceProvider::class);
     }
 
